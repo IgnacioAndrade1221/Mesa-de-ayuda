@@ -5,17 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <title>Chat</title>
-
 </head>
 <body>
-    <div class="chat-box" id="chatBox"></div>
+    <div class="chat-box" id="chatBox">
+        <!-- Opciones iniciales -->
+        <div class="message bot">Hola! Soy un asistente virtual.</div>
+        <div class="message bot">Escribe el número de la opción que deseas:</div>
+        <div class="message bot">1. Agendar cita</div>
+        <div class="message bot">2. Información sobre servicios</div>
+        <div class="message bot">3. Nuestra experiencia</div>
+        <div class="message bot">4. Contacto</div>
+        <div class="message bot">5. Hablar con un asistente virtual</div>
+        <div class="message bot">6. Limpiar chat y mostrar opciones</div>
+    </div>
     <input type="text" id="userInput" placeholder="Escribe un mensaje...">
     <button onclick="sendMessage()">Enviar</button>
 
     <script>
         function sendMessage() {
             const input = document.getElementById('userInput');
-            const message = input.value;
+            const message = input.value.trim();
             if (!message) return;
 
             // Agregar el mensaje del usuario al chat
@@ -29,7 +38,7 @@
             input.value = '';
 
             // Enviar el mensaje al servidor
-            fetch(`/chat-response/?message=${message}`)
+            fetch(`/mesa_ayuda/chat-response/?message=${message}`)
                 .then(response => response.json())
                 .then(data => {
                     // Agregar la respuesta del bot al chat
@@ -45,16 +54,7 @@
 
         // Iniciar la conversación automáticamente
         document.addEventListener("DOMContentLoaded", function() {
-            fetch(`/chat-response/?message=`)
-                .then(response => response.json())
-                .then(data => {
-                    const chatBox = document.getElementById('chatBox');
-                    const botMessage = document.createElement('div');
-                    botMessage.classList.add('message', 'bot');
-                    botMessage.innerHTML = data.response;  // Permitir HTML en la respuesta
-                    chatBox.appendChild(botMessage);
-                    chatBox.scrollTop = chatBox.scrollHeight;
-                });
+            // Nada específico se carga inicialmente
         });
     </script>
 </body>
